@@ -6,10 +6,10 @@ public class Constants {
 
 	public static class UI {
 		public static class Buttons {
-			static final int B_WIDTH_DEFAULT = 140;
-			static final int B_HEIGHT_DEFAULT = 56;
-			static final int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
-			static final int HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
+			public static final int B_WIDTH_DEFAULT = 140;
+			public static final int B_HEIGHT_DEFAULT = 56;
+			public static final int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
+			public static final int B_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
 			// TODO: All variables are public static final int
 			// B_WIDTH_DEFAULT set to 140
 			// B_HEIGHT_DEFAULT set to 56

@@ -15,8 +15,6 @@ public class Game implements Runnable {
     private final int UPS_SET = 200;
     private Playing playing;
     private Menu menu;
-    // TODO: create a private field of type Playing named playing.
-    // TODO: create a private field of type Menu named menu
 
     public static int TILES_DEFAULT_SIZE = 32;
     public static float SCALE = 2f;
@@ -25,14 +23,7 @@ public class Game implements Runnable {
     public static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
     public static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public static int GAME_HEIGHT = TILES_SIZE * TILES_IN_WIDTH;
-    // TODO: create public final static fields of the following name and value (these are some extra constants)
-    // TODO: int TILES_DEFAULT_SIZE set to 32
-    // TODO: float SCALE set to 2f
-    // TODO: int TILES_IN_WIDTH set to 26
-    // TODO: int TILES_IN_HEIGHT set to 14
-    // TODO: int TILES_SIZE set to (int) (TILES_DEFAULT_SIZE * SCALE)
-    // TODO: int GAME_WIDTH set to TILES_SIZE * TILES_IN_WIDTH
-    // TODO: int GAME_HEIGHT set to TILES_SIZE * TILE_IN_HEIGHT
+
 
     public Game() {
         initClasses();
@@ -48,8 +39,7 @@ public class Game implements Runnable {
     private void initClasses() {
         menu = new Menu(this);
         playing = new Playing(this);
-        // TODO: set menu to new Menu passing in this
-        // TODO: set playing to new Playing passing in this
+
     }
 
     private void startGameLoop() {
@@ -61,17 +51,14 @@ public class Game implements Runnable {
         switch (Gamestate.state) {
             case MENU:
                 menu.update();
-                // TODO: call menu.update()
                 break;
             case PLAYING:
                 playing.update();
-                // TODO: call playing.update()
                 break;
             case OPTIONS:
             case QUIT:
             default:
                 System.exit(0);
-                // TODO: call System.exit passing in 0
                 break;
         }
     }
@@ -80,11 +67,9 @@ public class Game implements Runnable {
         switch (Gamestate.state) {
             case MENU:
                 menu.draw(g);
-                // TODO: call menu.draw passing in g
                 break;
             case PLAYING:
                 playing.draw(g);
-                // TODO: call playing.draw passing in g
                 break;
             default:
                 break;
@@ -140,8 +125,6 @@ public class Game implements Runnable {
         if (Gamestate.state == Gamestate.PLAYING){
             playing.getPlayer().resetDirBooleans();
         }
-        // TODO: if Gamestate.state is equal to Gamestate.PLAYING
-        // TODO: call playing.getPlayer().resetDirBoolean()
     }
 
     public Menu getMenu() {

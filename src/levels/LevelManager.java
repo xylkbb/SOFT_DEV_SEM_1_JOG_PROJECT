@@ -7,7 +7,9 @@ import main.Game;
 import utilz.LoadSave;
 
 public class LevelManager {
-
+	private Game game;
+	private BufferedImage[] levelSprite;
+	private Level levelOne;
 	// TODO: all fields are private
 	// TODO: create a Game called game
 	// TODO: create a BufferedImage[] called levelSprite
@@ -15,6 +17,9 @@ public class LevelManager {
 
 
 	public LevelManager(Game game) {
+		this.game = game;
+		importOutsideSprites();
+		levelOne = new Level(LoadSave.GetLevelData());
 		// TODO: set this game to game
 		// TODO: call importOutsideSprites()
 		// TODO: set levelOne to newLevel(LoadSave.GetLevelData()
@@ -43,6 +48,7 @@ public class LevelManager {
 	}
 
 	public Level getCurrentLevel() {
+		return levelOne;
 		// TODO: return levelOne
 	}
 

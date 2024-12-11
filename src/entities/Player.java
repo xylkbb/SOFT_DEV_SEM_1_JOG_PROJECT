@@ -31,7 +31,7 @@ public class Player extends Entity {
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimations();
-        // TODO: call initHitbox passing in x, y, (int) (20 * Game.SCALE), (int) (27 * Game.SCALE)
+        initHitbox(x, y, (int) (20 * Game.SCALE), (int) (27 * Game.SCALE));
     }
 
     public void update() {
@@ -41,7 +41,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        // TODO: call g.drawImage passing in animations[playerAction][aniIndex], (int)(hitbox.x - xDrawOffset), (int)(hitbox.y - YDrawOffset), width, height, null)
+        g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
     }
 
     private void updateAnimationTick() {
@@ -63,10 +63,12 @@ public class Player extends Entity {
         else
             playerAction = IDLE;
 
-        // TODO: if inAir
-        // TODO: if airSpeed is less than 0
-        // TODO: set playerAction to JUMP
-        // TODO: else set playerAction to FALLING
+        if (inAir) {
+            if (airSpeed < 0) {
+                playerAction = JUMP;
+            } else playerAction = FALLING;
+        }
+
 
 
         if (attacking)
@@ -83,59 +85,73 @@ public class Player extends Entity {
 
     private void updatePos() {
         moving = false;
+        if (jump) {
+            jump();
 
-        // TODO: if jump
-        // TODO: call jump()
-        // TODO: if not left and not right and not inAir
-        // TODO: return
+        }
+        if (!left && !right && !inAir) {
+            return;
+        }
 
-        // create a float called xSpeed and set to 0
+        float xSpeed = 0;
 
-        // TODO: if left subtract playerSpeed from xSpeed
-        // TODO: if right add playerSpeed to xSpeed
+        if (left) {
+            playerSpeed -= xSpeed;
+        }
+        if (right) {
+            playerSpeed += xSpeed;
+        }
 
 
-        // TODO: if not inAir
-        // TODO: if not IsEntityOnFloor(hitbox, lvlData)
-        // TODO: set inAir to true
+
+        if (!inAir) {
+            if (!IsEntityOnFloor(hitbox, lvlData)) {
+                inAir = true;
+            }
+        }
+
+        if (inAir) {
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
+                airSpeed += hitbox.y;
+                gravity += airSpeed;
+                updateXPos(xSpeed);
+            } else hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+        }
+
+        if (airSpeed > 0) {
+            resetInAir();
+        } else airSpeed = fallSpeedAfterCollision;
+        updateXPos(xSpeed);
+
+        moving = true;
 
 
-        // TODO: if inAir
-        // TODO: if CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)
-        // TODO: add airSpeed to hitbox.y
-        // TODO: add gravity to airSpeed
-        // TODO: updateXPos
-        // TODO: else
-        // TODO: set hitbox.y to GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed)
-        // TODO: if airSpeed is positive
-        // TODO: call resetInAir()
-        // TODO: else
-        // TODO: set airSpeed to fallSpeedAfterCollision
-        // TODO: done with else call updateXPos(xSpeed)
-        // TODO: else (based off of if inAir)
-        // TODO: call updateXPos(xSpeed)
-        // TODO: set moving to true
     }
 
+
     private void jump() {
-        // TODO: if inAir then return
-        // TODO: set inAir to true
-        // TODO: set airSpeed to jumpSpeed
+        if (inAir) {
+            return;
+        }
+        inAir = true;
+        airSpeed = jumpSpeed;
+
     }
 
     private void resetInAir() {
-        // TODO: set inAir to false
-        // TODO: set airSpeed to 0
+        inAir = false;
+        airSpeed = 0;
+
     }
 
     private void updateXPos(float xSpeed) {
-        // TODO: if CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)
-        // TODO: add xSpeed to hitbox.x
-        // TODO: else set hitbox.x to GetEntityXPosNextToWall(hitbox, xSpeed)
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
+            xSpeed += hitbox.x;
+        } else hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
     }
 
     private void loadAnimations() {
-        // TODO: create a BufferedImage called img and set to LoadSvae.GetSpriteAtlas(LoadSave.PLAYER_ATLAS)
+        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
         animations = new BufferedImage[9][6];
         for (int row = 0; row < animations.length; row++)
@@ -145,9 +161,11 @@ public class Player extends Entity {
     }
 
     public void loadLvlData(int[][] lvlData) {
-        // TODO: set this lvlData to lvlData
-        // TODO: if not IsEntityOnFloor(hitbox, lvlData)
-        // TODO: set inAir to true
+        this.lvlData = lvlData;
+        if (!IsEntityOnFloor(hitbox, lvlData)) {
+            inAir = true;
+        }
+
     }
 
     public void resetDirBooleans() {
@@ -165,15 +183,37 @@ public class Player extends Entity {
         return left;
     }
 
-    public void setLeft(boolean left) {
-        this.left = left;
+    public void setLeft(boolean up) {
+        this.up = left;
     }
 
-    // TODO: repeat for Up, Down, Right for previous 2
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public boolean isRight() {
+        return down;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
 
 
     public void setJump(boolean jump) {
-        // TODO: set this jump to jump.
+        this.jump = jump;
     }
 
 }
