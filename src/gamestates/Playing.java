@@ -38,40 +38,40 @@ public class Playing extends State implements Statemethods {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1){
-		player.setAttacking(true);
+			player.setAttacking(true);
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(true);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(true);
-			break;
-		case KeyEvent.VK_SPACE:
-			player.setJump(true);
-			break;
-		case KeyEvent.VK_BACK_SPACE:
-			Gamestate.state = Gamestate.MENU;
-			break;
+			case KeyEvent.VK_A:
+				player.setLeft(true);
+				break;
+			case KeyEvent.VK_D:
+				player.setRight(true);
+				break;
+			case KeyEvent.VK_SPACE:
+				player.setJump(true);
+				break;
+			case KeyEvent.VK_BACK_SPACE:
+				Gamestate.state = Gamestate.MENU;
+				break;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(false);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(false);
-			break;
-		case KeyEvent.VK_SPACE:
-			player.setJump(false);
-			break;
+			case KeyEvent.VK_A:
+				player.setLeft(false);
+				break;
+			case KeyEvent.VK_D:
+				player.setRight(false);
+				break;
+			case KeyEvent.VK_SPACE:
+				player.setJump(false);
+				break;
 		}
 
 	}
